@@ -12,10 +12,24 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
-    }
+      r[l]= 0.0f;
+      for(unsigned int n = l; n<x.size();n++){
+        r[l] += x[n]*x[n-l];
+      }
+      r[l] = r[l] / x.size();
+      /// \FET - autocorrelation calculated
+      /** # titulo grande
+      * ## subtitulo
+      * - elemento1
+      * -e2
+      * */
+    
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
       r[0] = 1e-10; 
+      
+    }
+
   }
 
   void PitchAnalyzer::set_window(Window win_type) {
@@ -25,9 +39,18 @@ namespace upc {
     window.resize(frameLen);
 
     switch (win_type) {
-    case HAMMING:
+    case HAMMING:{
       /// \TODO Implement the Hamming window
-      break;
+      /// \FET - Hamming window done
+      //window.assign(frameLen, 1);
+      float a0 = 0.53836F;
+      float a1 = 0.46164F;
+      for (unsigned int n = 0; n < frameLen; n++){
+        window[n] = a0-a1*cos((2*M_PI*n)/(frameLen-1));
+      }
+    }
+    break;
+
     case RECT:
     default:
       window.assign(frameLen, 1);
@@ -50,7 +73,7 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    return true;
+    return false;
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -75,10 +98,18 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-
+    /// \FET - Maxim localitzat
+    for (iR = iRMax = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++) {
+      if (*iR > *iRMax) {
+        iRMax = iR;
+      }
+    }
+    
     unsigned int lag = iRMax - r.begin();
 
     float pot = 10 * log10(r[0]);
+
+    
 
     //You can print these (and other) features, look at them using wavesurfer
     //Based on that, implement a rule for unvoiced
