@@ -17,7 +17,7 @@ namespace upc {
         r[l] += x[n]*x[n-l];
       }
       r[l] = r[l] / x.size();
-      /// \FET - autocorrelation calculated
+      /// \ -> FET - autocorrelation calculated
       /** # titulo grande
       * ## subtitulo
       * - elemento1
@@ -41,8 +41,7 @@ namespace upc {
     switch (win_type) {
     case HAMMING:{
       /// \TODO Implement the Hamming window
-      /// \FET - Hamming window done
-      //window.assign(frameLen, 1);
+      /// \FET -> Hamming window done
       float a0 = 0.53836F;
       float a1 = 0.46164F;
       for (unsigned int n = 0; n < frameLen; n++){
@@ -73,7 +72,11 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    return false;
+    bool unvoiced = true;
+    if(rmaxnorm > umaxnorm){ //entonces es SONORO
+      unvoiced = false;
+    }
+    return unvoiced;
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -98,7 +101,7 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
-    /// \FET - Maxim localitzat
+    /// \FET -> Maxim localitzat
     for (iR = iRMax = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++) {
       if (*iR > *iRMax) {
         iRMax = iR;
