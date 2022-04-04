@@ -59,7 +59,7 @@ int main(int argc, const char *argv[]) {
   }
 
   int n_len = rate * FRAME_LEN;
-  int n_shift = rate * FRAME_SHIFT;
+  int n_shift = rate * FRAME_SHIFT; //desplazamiento
 
   // Define analyzer
   PitchAnalyzer analyzer(n_len, rate, PitchAnalyzer::RECT, 50, 500, umaxnorm);
@@ -71,6 +71,16 @@ int main(int argc, const char *argv[]) {
   // Iterate for each frame and save values in f0 vector
   vector<float>::iterator iX;
   vector<float> f0;
+
+  //center-clipping: DATA 
+  for (iX = x.begin(); iX  < x.end(); iX++ ) {
+    if (*iX < 1){
+      std::cout << *iX << "\n";
+    }
+    std::cout << *iX << "\n";
+  // \En proces
+  }
+
   for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
     float f = analyzer(iX, iX + n_len);
     f0.push_back(f);

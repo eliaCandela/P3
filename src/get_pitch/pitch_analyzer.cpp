@@ -12,19 +12,14 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+      /// \FET -> autocorrelation calculated
+
       r[l]= 0.0f;
       for(unsigned int n = l; n<x.size();n++){
         r[l] += x[n]*x[n-l];
       }
       r[l] = r[l] / x.size();
-      /// \ -> FET - autocorrelation calculated
-      /** # titulo grande
-      * ## subtitulo
-      * - elemento1
-      * -e2
-      * */
-    
-
+      
     if (r[0] == 0.0F) //to avoid log() and divide zero 
       r[0] = 1e-10; 
       
@@ -72,11 +67,14 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
+    /// \MILLORAR -> detector de senyal unvoiced amb un nou parametre: umaxnorm
+
     bool unvoiced = true;
     if(rmaxnorm > umaxnorm){ //entonces es SONORO
       unvoiced = false;
     }
     return unvoiced;
+
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
