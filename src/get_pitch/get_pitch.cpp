@@ -1,5 +1,4 @@
 /// @file
-
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -44,7 +43,7 @@ int main(int argc, const char *argv[]) {
         {argv + 1, argv + argc},	// array of arguments, without the program name
         true,    // show help if requested
         "2.0");  // version string
-  
+
   //docopt = mapeo
 	std::string input_wav = args["<input-wav>"].asString();
 	std::string output_txt = args["<output-txt>"].asString();
@@ -63,6 +62,7 @@ int main(int argc, const char *argv[]) {
 
   // Define analyzer
   PitchAnalyzer analyzer(n_len, rate, PitchAnalyzer::RECT, 50, 500, umaxnorm);
+  /// \FET -> add the argument umaxronm
 
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For instance,
@@ -74,12 +74,12 @@ int main(int argc, const char *argv[]) {
 
   //center-clipping: DATA 
   for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 1){
-      std::cout << *iX << "\n";
+    if (*iX < 0.008){
+      *iX = 0;
     }
-    std::cout << *iX << "\n";
-  // \En proces
+
   }
+  /// \FET -> center-cliping done
 
   for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
     float f = analyzer(iX, iX + n_len);
@@ -89,6 +89,28 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+
+  vector<float> med; 
+  int cont = 0;
+  int k = 0;
+
+  for (iX = f0.begin(); iX < f0.end(); ++iX){
+    if(k<3){
+      med[k]=*iX;
+    }else{
+      for(int r=k-3; r<k; ++r){
+        med[k]+=med[r];
+      }
+      med[k]=med[k]/3;
+    }
+  k++;
+  }
+
+  cont = 0;
+  for (iX = f0.begin(); iX < f0.end(); ++iX){
+    *iX = med[cont];
+    cont++;
+  }
 
   // Write f0 contour into the output file
   ofstream os(output_txt);
@@ -103,4 +125,5 @@ int main(int argc, const char *argv[]) {
   os << 0 << '\n';//pitch at t=Dur
 
   return 0;
+  
 }
