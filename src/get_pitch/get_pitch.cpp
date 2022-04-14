@@ -74,7 +74,7 @@ int main(int argc, const char *argv[]) {
 
   //center-clipping: DATA 
   for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 0.008){
+    if (*iX < 0.008){ //0.008
       *iX = 0;
     }
 
@@ -89,6 +89,7 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+<<<<<<< HEAD
 
   /*vector<float> med; 
   int cont = 0;
@@ -100,9 +101,21 @@ int main(int argc, const char *argv[]) {
     }else{
       for(int r=0; r<k; r+k){
         med[k]+=med[r];
+=======
+  /// \FET -> Non recursive median filter 
+
+  float aux = 0;
+  int k_wind = 3; ///window size
+  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
+    for(int j = 0; j < k_wind; ++j){
+      if(i <= ((int)f0.size()-k_wind)){
+        aux += f0[i + j]; 
+      }else{
+        aux = f0[i];
+>>>>>>> 4ed4ded518897445f5625f95040f22ea7d73d4ca
       }
-      med[k]=med[k]/3;
     }
+<<<<<<< HEAD
   k++;
   }
   cont = 0;
@@ -110,6 +123,11 @@ int main(int argc, const char *argv[]) {
     *iX = med[cont];
     cont++;
   }*/
+=======
+    f0[i] = aux/k_wind;
+    aux=0;
+  }
+>>>>>>> 4ed4ded518897445f5625f95040f22ea7d73d4ca
 
 int k_wind = 3; ///tamany finestra (millor 3 q 5)
   for(int i = 0; i < f0.size(); i=i+k_wind){
