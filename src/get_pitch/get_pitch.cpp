@@ -90,28 +90,35 @@ int main(int argc, const char *argv[]) {
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
 
-  vector<float> med; 
+  /*vector<float> med; 
   int cont = 0;
-  int k = 0;
+  int k = 3;
 
-  for (iX = f0.begin(); iX < f0.end(); ++iX){
+  for (iX = 0; iX < f0.end(); ++iX){
     if(k<3){
       med[k]=*iX;
     }else{
-      for(int r=k-3; r<k; ++r){
+      for(int r=0; r<k; r+k){
         med[k]+=med[r];
       }
       med[k]=med[k]/3;
     }
   k++;
   }
-
   cont = 0;
   for (iX = f0.begin(); iX < f0.end(); ++iX){
     *iX = med[cont];
     cont++;
-  }
+  }*/
 
+int k_wind = 3; ///tamany finestra (millor 3 q 5)
+  for(int i = 0; i < f0.size(); i=i+k_wind){
+    for(int j = 0; j < k_wind; ++j){
+      //iX[i+j]=(iX[i]+iX[k_wind-1])/2;        //meva
+      iX[i + j] = iX[i + (k_wind - 1) / 2];   //bona
+    }
+  }
+  
   // Write f0 contour into the output file
   ofstream os(output_txt);
   if (!os.good()) {
