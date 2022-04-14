@@ -81,11 +81,11 @@ Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en la
 	  
 	En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
 <p align="center">
-  <img src="Captura_tramo_sonoro.jpg" width="900" title="Captura del tramo sonoro">
+  <img src="Captura_tramo_sonoro.jpg" width="700" title="Captura del tramo sonoro">
 </p>
 	En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
 <p align="center">
-  <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
+  <img src="Captura_tramo_sordo.jpg" width="700" title="Captura del tramo sordo">
 </p>
 	La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
 	con variable rmaxnorm, la siguiente es la de la autocorrelacion (autocorrelation.txt), con variable r1norm, 
@@ -96,19 +96,28 @@ Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en la
 	- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 	ilustrativa del resultado de ambos estimadores.
-     
-	Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
+     	Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 	el uso de alternativas de mayor calidad (particularmente Python).
 		
-	-> Usando el programa Wavesurfer sacamos la comparación de los pitch generados por nuestro código y el generado 
+	-> Usando el programa `Wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
 	por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
 <p align="center">
-  <img src="Captura_pitch_estimation.jpg" width="900" title="Captura de la señal">
+  <img src="Captura_pitch_estimation.jpg" width="700" title="Captura de la señal">
 </p>
-  
+  	Este resultado lo podemos obtener numericamente con el código de pitch_evaluate, ejecutando y 
+	consiguiendo lo siguiente: 
+	
+	**...imagen...**
+	
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
+  -> Usando el comando: ```pitch_db/train/*.f0ref ```:
+	|Values|tasa error|score|
+	|-|:-:|-:|
+	|col 1 is|left-aligned|$1600|
+	|col 2 is|centered|$12|
+	|col 3 is|right-aligned|$1|
 
 Ejercicios de ampliación
 ------------------------
