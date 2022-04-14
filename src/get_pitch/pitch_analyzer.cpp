@@ -69,11 +69,15 @@ namespace upc {
     ///   or compute and use other ones.
     /// \MILLORAR -> detector de senyal unvoiced amb un nou parametre: umaxnorm
 
-    bool unvoiced = true;
+    /*bool unvoiced = true;
     if(rmaxnorm > umaxnorm){ //entonces es SONORO
       unvoiced = false;
     }
-    return unvoiced;
+    return unvoiced;*/
+    if ((pot < -39.0F || r1norm < 0.895F) && rmaxnorm < 0.48F)
+      return true;
+    else
+      return false;
 
   }
 
@@ -115,7 +119,7 @@ namespace upc {
     //You can print these (and other) features, look at them using wavesurfer
     //Based on that, implement a rule for unvoiced
     //change to #if 1 and compile
-#if 0
+#if 1
     if (r[0] > 0.0F)
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
 #endif

@@ -74,7 +74,7 @@ int main(int argc, const char *argv[]) {
 
   //center-clipping: DATA 
   for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 0.008){
+    if (*iX < 0.008){ //0.008
       *iX = 0;
     }
 
@@ -89,27 +89,20 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+  /// \FET -> Non recursive median filter 
 
-  vector<float> med; 
-  int cont = 0;
-  int k = 0;
-
-  for (iX = f0.begin(); iX < f0.end(); ++iX){
-    if(k<3){
-      med[k]=*iX;
-    }else{
-      for(int r=k-3; r<k; ++r){
-        med[k]+=med[r];
+  float aux = 0;
+  int k_wind = 3; ///window size
+  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
+    for(int j = 0; j < k_wind; ++j){
+      if(i <= ((int)f0.size()-k_wind)){
+        aux += f0[i + j]; 
+      }else{
+        aux = f0[i];
       }
-      med[k]=med[k]/3;
     }
-  k++;
-  }
-
-  cont = 0;
-  for (iX = f0.begin(); iX < f0.end(); ++iX){
-    *iX = med[cont];
-    cont++;
+    f0[i] = aux/k_wind;
+    aux=0;
   }
 
   // Write f0 contour into the output file
