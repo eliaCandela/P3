@@ -53,30 +53,30 @@ Ejercicios básicos
   * Utilice el programa `wavesurfer` para analizar las condiciones apropiadas para determinar si un
     segmento es sonoro o sordo. 
 	
-	  - Inserte una gráfica con la estimación de pitch incorporada a `wavesurfer` y, junto a ella, los 
-	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
+	- Inserte una gráfica con la estimación de pitch incorporada a `wavesurfer` y, junto a ella, los 
+	  principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
 		(r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
 		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
 
-		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
+	Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 
-	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
-		en esta práctica es de 15 ms.
+	Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
+	en esta práctica es de 15 ms.
 		
-	  -> Para poder obtener de forma más precisa los valores de potencia, autocorrelación y atocorrelación normalizada, 
-	  representamos con el wavesurfer los tres ficheros de datos de nuestra señal de referencia (rl002.f0).
+	-> Para poder obtener de forma más precisa los valores de potencia, autocorrelación y atocorrelación normalizada, 
+	representamos con el wavesurfer los tres ficheros de datos de nuestra señal de referencia (rl002.f0).
 	  
-	  En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
+	En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
 <p align="center">
-  <img src="Captura_tramo_sonoro.jpg" width="1000" title="Captura del tramo sonoro">
+  <img src="Captura_tramo_sonoro.jpg" width="900" title="Captura del tramo sonoro">
 </p>
-	  En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
+	En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
 <p align="center">
-  <img src="Captura_tramo_sordo.jpg" width="1000" title="Captura del tramo sordo">
+  <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
 </p>
-	  La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
-	  la siguiente es la de la autocorrelacion (autocorrelation.txt), a continuación la potencia (power.pot) y 
-	  al final el pitch estimation y la propia señal rl002.wav . 
+	La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
+	la siguiente es la de la autocorrelacion (autocorrelation.txt), a continuación la potencia (power.pot) y 
+	al final el pitch estimation y la propia señal rl002.wav. 
 	
 	- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
@@ -88,7 +88,7 @@ Ejercicios básicos
 	-> Usando el programa Wavesurfer sacamos la comparación de los pitch generados por nuestro código y el generado 
 	por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
 <p align="center">
-  <img src="Captura_pitch_estimation.jpg" width="1000" title="Captura de la señal">
+  <img src="Captura_pitch_estimation.jpg" width="900" title="Captura de la señal">
 </p>
   
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
@@ -109,15 +109,15 @@ Ejercicios de ampliación
     con los argumentos añadidos.
     
 <p align="center">
-  <img src="Captura_variable_docopt.jpg" width="1000" title="Captura de la señal">
+  <img src="Captura_variable_docopt.jpg" width="500" title="Captura de la señal">
 </p>
-    
+
     Para facilitar el uso del programa y detección de pitch, hemos añadidio una variable llamada "umaxnorm" que 
     corresponde al umbral del maximo de la autocorrelación normalizada. Esta la usamos en la función analyzer() y la inicializamos en el
     constructor de PitchAnalyzer. 
     
 <p align="center">
-  <img src="Captura_variable_funcion.jpg" width="1000" title="Captura de la señal">
+  <img src="Captura_variable_funcion.jpg" width="700" title="Captura de la señal">
 </p>
 
 
