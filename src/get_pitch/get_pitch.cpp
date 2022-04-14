@@ -1,4 +1,5 @@
 /// @file
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -89,19 +90,6 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
-<<<<<<< HEAD
-
-  /*vector<float> med; 
-  int cont = 0;
-  int k = 3;
-
-  for (iX = 0; iX < f0.end(); ++iX){
-    if(k<3){
-      med[k]=*iX;
-    }else{
-      for(int r=0; r<k; r+k){
-        med[k]+=med[r];
-=======
   /// \FET -> Non recursive median filter 
 
   float aux = 0;
@@ -112,29 +100,10 @@ int main(int argc, const char *argv[]) {
         aux += f0[i + j]; 
       }else{
         aux = f0[i];
->>>>>>> 4ed4ded518897445f5625f95040f22ea7d73d4ca
       }
     }
-<<<<<<< HEAD
-  k++;
-  }
-  cont = 0;
-  for (iX = f0.begin(); iX < f0.end(); ++iX){
-    *iX = med[cont];
-    cont++;
-  }*/
-=======
     f0[i] = aux/k_wind;
     aux=0;
-  }
->>>>>>> 4ed4ded518897445f5625f95040f22ea7d73d4ca
-
-int k_wind = 3; ///tamany finestra (millor 3 q 5)
-  for(int i = 0; i < f0.size(); i=i+k_wind){
-    for(int j = 0; j < k_wind; ++j){
-      //iX[i+j]=(iX[i]+iX[k_wind-1])/2;        //meva
-      iX[i + j] = iX[i + (k_wind - 1) / 2];   //bona
-    }
   }
   
   // Write f0 contour into the output file
