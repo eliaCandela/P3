@@ -14,13 +14,9 @@ Ejercicios básicos
   `get_pitch`.
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
-   ```
-
-  void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
-
-    for (unsigned int l = 0; l < r.size(); ++l) {
-      /// \TODO Compute the autocorrelation r[l]
-      /// \FET -> autocorrelation calculated
+   
+```
+for (unsigned int l = 0; l < r.size(); ++l) {
 
       r[l]= 0.0f;
       for(unsigned int n = l; n<x.size();n++){
@@ -31,9 +27,8 @@ Ejercicios básicos
     if (r[0] == 0.0F) //to avoid log() and divide zero 
       r[0] = 1e-10;  
     }
-  }
-		
-  ```
+  };
+```
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
@@ -42,10 +37,28 @@ Ejercicios básicos
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
+
+
+
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+```
+vector<float>::const_iterator iR = r.begin(), iRMax = iR;
+    for (iR = iRMax = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++) {
+      if (*iR > *iRMax) {
+        iRMax = iR;
+      }
+    }
+```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+```
+if ((pot < -44.0F || r1norm < 0.895F) && rmaxnorm < 0.48F)
+      return true;
+    else
+      return false;
+```
+Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en las gráficas adjuntas. 
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del estimador de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -75,8 +88,10 @@ Ejercicios básicos
   <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
 </p>
 	La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
-	la siguiente es la de la autocorrelacion (autocorrelation.txt), a continuación la potencia (power.pot) y 
-	al final el pitch estimation y la propia señal rl002.wav. 
+	con variable rmaxnorm, la siguiente es la de la autocorrelacion (autocorrelation.txt), con variable r1norm, 
+	a continuación la potencia (power.pot), con variable pot, y al final el pitch estimation y la propia señal rl002.wav. 
+	Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable rmaxnorm, la 
+	cual tiene un valor entre los 0.4 y 0.5, la r1norm de 0.8 por encima y la potencia  por encima de los -40 dB. 
 	
 	- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
