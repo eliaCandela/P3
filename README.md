@@ -168,6 +168,43 @@ Ejercicios de ampliación
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
   la longitud del filtro.
+  
+   -> Para el preprocesado hemos utilizado la técnica de CENTER-CLIPPING con el código siguiente: 
+```
+ for (iX = x.begin(); iX  < x.end(); iX++ ) {
+    if (*iX < 0.008){ //0.008
+      *iX = 0;
+    }
+  }
+```
+  Esta técnica consiste en anular los valores de magnitud pequeña de la señal, permitiendo que al introducir 
+  una distorsión no lineal, la intensidad de los harmónicos de orden elevado aumenten. Generando una robustez 
+  de los harmómicos frente al ruido. 
+  
+  -> En el postprocesado hemos usado la técnica del FILTRO DE MEDIANA con el código siguiente: 
+  ```
+  float aux = 0;
+  int k_wind = 3; ///window size
+  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
+    for(int j = 0; j < k_wind; ++j){
+      if(i <= ((int)f0.size()-k_wind)){
+        aux += f0[i + j]; 
+      }else{
+        aux = f0[i];
+      }
+    }
+    f0[i] = aux/k_wind;
+    aux=0;
+  }
+  ```
+  
+  Esta técnica consiste en ...
+  
+  
+  
+  Para ello, hemos usado una ventana de tamaño 3. Hemos escogido este valor dado qye al probar con otros impares, el 
+  porcentage de detección iba disminuiendo, siendo cada vez menos preciso. Aun así, hemos podido comprobar que con un tamaño de 13, 
+  vuelve a subir la detección, hasta conseguir la inicial con 3. 
    
 
 Evaluación *ciega* del estimador
