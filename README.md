@@ -93,16 +93,16 @@ Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en la
 	Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable rmaxnorm, la 
 	cual tiene un valor entre los 0.4 y 0.5, la r1norm de 0.8 por encima y la potencia  por encima de los -40 dB. 
 	
-	- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
-	su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-	ilustrativa del resultado de ambos estimadores.
-     	Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
-	el uso de alternativas de mayor calidad (particularmente Python).
-		
-	-> Usando el programa `Wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
-	por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
+- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
+su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
+ilustrativa del resultado de ambos estimadores.
+Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
+el uso de alternativas de mayor calidad (particularmente Python).
+
+-> Usando el programa `Wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
+por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
 <p align="center">
-  <img src="Captura_pitch_estimation.jpg" width="700" title="Captura de la señal">
+  <img src="Captura_pitch_estimation.jpg" width="800" title="Captura de la señal">
 </p>
   	Este resultado lo podemos obtener numericamente con el código de pitch_evaluate, ejecutando y 
 	consiguiendo lo siguiente: 
@@ -112,12 +112,13 @@ Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en la
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
-  -> Usando el comando: ```pitch_db/train/*.f0ref ```:
-	|Values|tasa error|score|
-	|-|:-:|-:|
-	|col 1 is|left-aligned|$1600|
-	|col 2 is|centered|$12|
-	|col 3 is|right-aligned|$1|
+
+-> Usando el comando: ```pitch_db/train/*.f0ref ```:
+|Values|tasa error|score|
+|-|:-:|-:|
+|col 1 is|left-aligned|$1600|
+|col 2 is|centered|$12|
+|col 3 is|right-aligned|$1|
 
 Ejercicios de ampliación
 ------------------------
@@ -136,9 +137,9 @@ Ejercicios de ampliación
   <img src="Captura_variable_docopt.jpg" width="500" title="Captura de la señal">
 </p>
 
-    Para facilitar el uso del programa y detección de pitch, hemos añadidio una variable llamada "umaxnorm" que 
-    corresponde al umbral del maximo de la autocorrelación normalizada. Esta la usamos en la función analyzer() y la inicializamos en el
-    constructor de PitchAnalyzer. 
+Para facilitar el uso del programa y detección de pitch, hemos añadidio una variable llamada "umaxnorm" que 
+corresponde al umbral del maximo de la autocorrelación normalizada. Esta la usamos en la función analyzer() y la inicializamos en el
+constructor de PitchAnalyzer. 
     
 <p align="center">
   <img src="Captura_variable_funcion.jpg" width="700" title="Captura de la señal">
@@ -172,7 +173,7 @@ Ejercicios de ampliación
    -> Para el preprocesado hemos utilizado la técnica de CENTER-CLIPPING con el código siguiente: 
 ```
  for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 0.008){ //0.008
+    if (*iX < 0.008){
       *iX = 0;
     }
   }
@@ -198,12 +199,13 @@ Ejercicios de ampliación
   }
   ```
   
-  Esta técnica consiste en ...
+  Esta técnica consiste en un filtro no lineal para evitar mala detección del pitch con sus múltiplos o de submultiplos de la freuencia real. 
+  Se basa en caluclar el valor mediano en una ventana centrada en cada instante de tiempo. con la función de reducir el ruido. Su uso es más 
+  concreto en señales con errores muy groseros, ya que podria incrementar el error fino de la estimación. 
   
-  
-  
-  Para ello, hemos usado una ventana de tamaño 3. Hemos escogido este valor dado qye al probar con otros impares, el 
-  porcentage de detección iba disminuiendo, siendo cada vez menos preciso. Aun así, hemos podido comprobar que con un tamaño de 13, 
+  Para ello, hemos usado una ventana de tamaño 3. Hemos escogido este valor dado que al probar con otros impares, el 
+  porcentage de detección iba disminuiendo, siendo cada vez menos preciso. Eso es así, por qué con mayor dimesión del filtro, más ruido 
+  se va reduciendo, eliminando partes de la propia señal con menor certeza. Aun así, hemos podido comprobar que con nuestro filtro y un tamaño de 13, 
   vuelve a subir la detección, hasta conseguir la inicial con 3. 
    
 
