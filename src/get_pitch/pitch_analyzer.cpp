@@ -67,7 +67,7 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    /// \MILLORAR -> detector de senyal unvoiced amb un nou parametre: umaxnorm
+    /// \FET -> detector de senyal unvoiced amb un nou parametre: umaxnorm
 
     /*bool unvoiced = true;
     if(rmaxnorm > umaxnorm){ //entonces es SONORO

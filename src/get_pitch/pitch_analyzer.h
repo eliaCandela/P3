@@ -30,7 +30,9 @@ namespace upc {
       samplingFreq, ///< sampling rate (in samples per second). Has to be set in the constructor call
       npitch_min, ///< minimum value of pitch period, in samples
       npitch_max; ///< maximum value of pitch period, in samples
-    float umaxnorm; ///< umbral del maximo de la autocorr. normalizada
+    float umaxnorm, ///< threshold maximum autocorrelation normalized
+      u1norm, ///< threshold autocorrelation normalized
+      upot; ///< threshold power level
 	///
 	/// Computes correlation from lag=0 to r.size()
 	///
@@ -53,14 +55,18 @@ namespace upc {
 					Window w=PitchAnalyzer::HAMMING,	///< Window type
 					float min_F0 = MIN_F0,		///< Pitch range should be restricted to be above this value
 					float max_F0 = MAX_F0,		///< Pitch range should be restricted to be below this value
-          float umaxnorm_ = 0.5 
+          float umaxnorm_ = 0.40, 
+          float u1norm_ = 0.96, 
+          float upot_ = 33.0 
          )
 	{
       frameLen = fLen;
       samplingFreq = sFreq;
       set_f0_range(min_F0, max_F0);
       set_window(w);
-      umaxnorm = umaxnorm_; //umaxnorm es un atributo de la clase
+      umaxnorm = umaxnorm_;
+      u1norm = u1norm_;
+      upot = upot_;
     }
 
 	///
