@@ -83,12 +83,12 @@ las variables upot, u1norm y umaxnorm, declaradas previamente.
 	En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
 	
 <p align="center">
-  <img src="Captura_tramo_sonoro.jpg" width="700" title="Captura del tramo sonoro">
+  <img src="Captura_tramo_sonoro.jpg" width="900" title="Captura del tramo sonoro">
 </p>
 	En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
 	
 <p align="center">
-  <img src="Captura_tramo_sordo.jpg" width="700" title="Captura del tramo sordo">
+  <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
 </p>
 -> La primera gráfica que se observa es la de la autocorrelación normalizada (`autocorrelayion_norm.txt`), 
 con variable urmaxnorm, la siguiente es la de la autocorrelacion (`autocorrelation.txt`), con variable u1norm, 
