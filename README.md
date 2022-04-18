@@ -53,12 +53,13 @@ vector<float>::const_iterator iR = r.begin(), iRMax = iR;
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
 ```
-if ((pot < -44.0F || r1norm < 0.895F) && rmaxnorm < 0.48F)
+if ((pot < -upot || r1norm < u1norm) && rmaxnorm < umaxnorm) 
       return true;
     else
       return false;
 ```
-Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en las gráficas adjuntas. 
+Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en las gráficas adjuntas. Estos valores los hemos identificado con 
+las variables upot, u1norm y umaxnorm, declaradas previamente. 
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del estimador de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -80,45 +81,50 @@ Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en la
 	representamos con el wavesurfer los tres ficheros de datos de nuestra señal de referencia (rl002.f0).
 	  
 	En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
+	
 <p align="center">
-  <img src="Captura_tramo_sonoro.jpg" width="700" title="Captura del tramo sonoro">
+  <img src="Captura_tramo_sonoro.jpg" width="900" title="Captura del tramo sonoro">
 </p>
 	En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
-<p align="center">
-  <img src="Captura_tramo_sordo.jpg" width="700" title="Captura del tramo sordo">
-</p>
-	La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
-	con variable rmaxnorm, la siguiente es la de la autocorrelacion (autocorrelation.txt), con variable r1norm, 
-	a continuación la potencia (power.pot), con variable pot, y al final el pitch estimation y la propia señal rl002.wav. 
-	Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable rmaxnorm, la 
-	cual tiene un valor entre los 0.4 y 0.5, la r1norm de 0.8 por encima y la potencia  por encima de los -40 dB. 
 	
+<p align="center">
+  <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
+</p>
+-> La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelacion_norm.txt), 
+con variable urmaxnorm, la siguiente es la de la autocorrelacion (autocorrelacion.txt), con variable u1norm, 
+a continuación la potencia (power.pot), con variable upot, y al final el pitch_estimation y la propia señal rl002.wav. 
+Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable umaxnorm, la 
+cual tiene un valor inferior a 0.5, la u1norm de 0.8 por encima y la potencia upot por debajo de los -40 dB. 
+
 - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 ilustrativa del resultado de ambos estimadores.
 Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 el uso de alternativas de mayor calidad (particularmente Python).
 
--> Usando el programa `Wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
+-> Usando el programa `wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
 por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
+
 <p align="center">
   <img src="Captura_pitch_estimation.jpg" width="800" title="Captura de la señal">
 </p>
-  	Este resultado lo podemos obtener numericamente con el código de pitch_evaluate, ejecutando y 
-	consiguiendo lo siguiente: 
-	
-	**...imagen...**
 	
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 
--> Usando el comando: ```pitch_db/train/*.f0ref ```:
-|Values|tasa error|score|
-|-|:-:|-:|
-|col 1 is|left-aligned|$1600|
-|col 2 is|centered|$12|
-|col 3 is|right-aligned|$1|
+-> Usando el comando: ``pitch_db/train/*.f0ref ```:
+Este resultado lo podemos obtener numericamente con el código de `pitch_evaluate` de la base de datos, ejecutando y consiguiendo lo siguiente: 
+
+<p align="center">
+  <img src="captura_resultado_summary.jpeg" width="700" title="Captura de la señal">
+</p>
+	
+Para el fichero de prueba (rl002.wav), obtenemos una mayor detección. 
+	
+<p align="center">
+  <img src="captura_señal_propia.jpeg" width="700" title="Captura de la señal">
+</p>
 
 Ejercicios de ampliación
 ------------------------
@@ -134,17 +140,17 @@ Ejercicios de ampliación
     con los argumentos añadidos.
     
 <p align="center">
-  <img src="Captura_variable_docopt.jpg" width="500" title="Captura de la señal">
+  <img src="captura_mensaje_ayuda.jpeg" width="900" title="Captura de la señal">
 </p>
 
-Para facilitar el uso del programa y detección de pitch, hemos añadidio una variable llamada "umaxnorm" que 
-corresponde al umbral del maximo de la autocorrelación normalizada. Esta la usamos en la función analyzer() y la inicializamos en el
-constructor de PitchAnalyzer. 
-    
+Para facilitar el uso del programa y la detección de pitch, hemos añadidio varias variables: umaxnorm (umbral del máximo de la autocorrelación normalizada), 
+u1norm (umbral de la autocorrelación normalizada en 1) y upot (umbral del nivel de potencia). Estas nos permiten una mayor facilidad en la 
+aproximación de los parametros óptimos. 
+
+Captura del mensaje de especificación de los argumentos.     
 <p align="center">
-  <img src="Captura_variable_funcion.jpg" width="700" title="Captura de la señal">
+  <img src="captura_mensaje_argumentos.jpeg" width="1000" title="Captura de la señal">
 </p>
-
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de estimación
   de pitch.
@@ -152,7 +158,51 @@ constructor de PitchAnalyzer.
   Entre las posibles mejoras, puede escoger una o más de las siguientes:
 
   * Técnicas de preprocesado: filtrado paso bajo, diezmado, *center clipping*, etc.
+
+  -> Para el preprocesado hemos utilizado la técnica de CENTER-CLIPPING con el código siguiente: 
+```
+ float alpha = 0.0042;
+  for (iX = x.begin(); iX  < x.end(); iX++ ) {
+    if (*iX < alpha && *iX > -alpha){ 
+      *iX = 0;
+    }
+  }
+```
+  Esta técnica consiste en anular los valores de magnitud pequeña de la señal, permitiendo que al introducir 
+  una distorsión no lineal, la intensidad de los harmónicos de orden elevado aumenten. Generando una robustez 
+  de los harmómicos frente al ruido. 
+
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
+
+ -> En el postprocesado hemos usado la técnica del FILTRO DE MEDIANA con el código siguiente: 
+  ```
+ float aux = 0;
+  int k_wind = 1; ///window size
+  for(int i = 0; i < (int)f0.size(); i++){
+    for(int j = 0; j < k_wind; ++j){
+      if(i <= ((int)f0.size()-k_wind)){
+        aux += f0[i + j]; 
+      }else{
+        aux = f0[i];
+      }
+    }
+    f0[i] = aux/k_wind;
+    aux=0;
+  }
+  ```
+  Esta técnica consiste en un filtro no lineal para evitar la mala detección del pitch cogiendo sus múltiplos o  submultiplos de la freuencia real. 
+  Se basa en caluclar el valor mediano en una ventana centrada en cada instante de tiempo, con la función de reducir el ruido. Su uso es más 
+  concreto en señales con errores muy groseros, ya que podria incrementar el error fino de la estimación. 
+  
+  Para ello, nos hemos dado cuenta que al implementar este filtro, el porcentaje de detección disminuye, aumentando los errores gruesos (tal y como se ve
+  en la captura adjunta).
+  
+<p align="center">
+  <img src="captura_con_ventana_filtro.jpeg" width="600" title="Captura de la señal">
+</p>
+  
+  Por este motivo, mantenemos el filtro de mediana con un tamaño de ventana de 1. 
+
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
   * Optimización **demostrable** de los parámetros que gobiernan el estimador, en concreto, de los que
@@ -168,45 +218,7 @@ constructor de PitchAnalyzer.
 
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
-  la longitud del filtro.
-  
-   -> Para el preprocesado hemos utilizado la técnica de CENTER-CLIPPING con el código siguiente: 
-```
- for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 0.008){
-      *iX = 0;
-    }
-  }
-```
-  Esta técnica consiste en anular los valores de magnitud pequeña de la señal, permitiendo que al introducir 
-  una distorsión no lineal, la intensidad de los harmónicos de orden elevado aumenten. Generando una robustez 
-  de los harmómicos frente al ruido. 
-  
-  -> En el postprocesado hemos usado la técnica del FILTRO DE MEDIANA con el código siguiente: 
-  ```
-  float aux = 0;
-  int k_wind = 3; ///window size
-  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
-    for(int j = 0; j < k_wind; ++j){
-      if(i <= ((int)f0.size()-k_wind)){
-        aux += f0[i + j]; 
-      }else{
-        aux = f0[i];
-      }
-    }
-    f0[i] = aux/k_wind;
-    aux=0;
-  }
-  ```
-  
-  Esta técnica consiste en un filtro no lineal para evitar mala detección del pitch con sus múltiplos o de submultiplos de la freuencia real. 
-  Se basa en caluclar el valor mediano en una ventana centrada en cada instante de tiempo. con la función de reducir el ruido. Su uso es más 
-  concreto en señales con errores muy groseros, ya que podria incrementar el error fino de la estimación. 
-  
-  Para ello, hemos usado una ventana de tamaño 3. Hemos escogido este valor dado que al probar con otros impares, el 
-  porcentage de detección iba disminuiendo, siendo cada vez menos preciso. Eso es así, por qué con mayor dimesión del filtro, más ruido 
-  se va reduciendo, eliminando partes de la propia señal con menor certeza. Aun así, hemos podido comprobar que con nuestro filtro y un tamaño de 13, 
-  vuelve a subir la detección, hasta conseguir la inicial con 3. 
+  la longitud del filtro. 
    
 
 Evaluación *ciega* del estimador
