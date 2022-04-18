@@ -12,12 +12,8 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
-<<<<<<< HEAD
       /// \DONE Autocorrelation calculated 
 
-=======
-      /// \DONE Autocorrelation calculated
->>>>>>> 9303db4887ae8073988650b7f6883fc78ca906df
       r[l]= 0.0f;
       for(unsigned int n = l; n<x.size();n++){
         r[l] += x[n]*x[n-l];
