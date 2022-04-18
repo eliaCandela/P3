@@ -90,21 +90,21 @@ las variables upot, u1norm y umaxnorm, declaradas previamente.
 <p align="center">
   <img src="Captura_tramo_sordo.jpg" width="700" title="Captura del tramo sordo">
 </p>
-	-> La primera gráfica que se observa es la de la autocorrelación normalizada (`autocorrelayion_norm.txt`), 
-	con variable urmaxnorm, la siguiente es la de la autocorrelacion (`autocorrelation.txt`), con variable u1norm, 
-	a continuación la potencia (`power.pot`), con variable upot, y al final el pitch estimation y la propia señal rl002.wav. 
-	Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable umaxnorm, la 
-	cual tiene un valor inferior a 0.5, la u1norm de 0.8 por encima y la potencia upot por debajo de los -40 dB. 
-	
-	- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
-	su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-	ilustrativa del resultado de ambos estimadores.
-	Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
-	el uso de alternativas de mayor calidad (particularmente Python).
+-> La primera gráfica que se observa es la de la autocorrelación normalizada (`autocorrelayion_norm.txt`), 
+con variable urmaxnorm, la siguiente es la de la autocorrelacion (`autocorrelation.txt`), con variable u1norm, 
+a continuación la potencia (`power.pot`), con variable upot, y al final el pitch estimation y la propia señal rl002.wav. 
+Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable umaxnorm, la 
+cual tiene un valor inferior a 0.5, la u1norm de 0.8 por encima y la potencia upot por debajo de los -40 dB. 
 
-	-> Usando el programa `wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
-	por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
-	
+- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
+su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
+ilustrativa del resultado de ambos estimadores.
+Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
+el uso de alternativas de mayor calidad (particularmente Python).
+
+-> Usando el programa `wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
+por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
+
 <p align="center">
   <img src="Captura_pitch_estimation.jpg" width="800" title="Captura de la señal">
 </p>
@@ -113,14 +113,14 @@ las variables upot, u1norm y umaxnorm, declaradas previamente.
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 
-	-> Usando el comando: ``pitch_db/train/*.f0ref ```:
-	Este resultado lo podemos obtener numericamente con el código de `pitch_evaluate` de la base de datos, ejecutando y consiguiendo lo siguiente: 
-	
+-> Usando el comando: ``pitch_db/train/*.f0ref ```:
+Este resultado lo podemos obtener numericamente con el código de `pitch_evaluate` de la base de datos, ejecutando y consiguiendo lo siguiente: 
+
 <p align="center">
   <img src="captura_resultado_summary.jpg" width="800" title="Captura de la señal">
 </p>
 	
-	Para el fichero de prueba (rl002.wav), obtenemos una mayor detección. 
+Para el fichero de prueba (rl002.wav), obtenemos una mayor detección. 
 	
 <p align="center">
   <img src="captura_señal_propia.jpg" width="800" title="Captura de la señal">
