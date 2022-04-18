@@ -90,9 +90,9 @@ las variables upot, u1norm y umaxnorm, declaradas previamente.
 <p align="center">
   <img src="Captura_tramo_sordo.jpg" width="900" title="Captura del tramo sordo">
 </p>
--> La primera gráfica que se observa es la de la autocorrelación normalizada (`autocorrelayion_norm.txt`), 
-con variable urmaxnorm, la siguiente es la de la autocorrelacion (`autocorrelation.txt`), con variable u1norm, 
-a continuación la potencia (`power.pot`), con variable upot, y al final el pitch estimation y la propia señal rl002.wav. 
+-> La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelacion_norm.txt), 
+con variable urmaxnorm, la siguiente es la de la autocorrelacion (autocorrelacion.txt), con variable u1norm, 
+a continuación la potencia (power.pot), con variable upot, y al final el pitch_estimation y la propia señal rl002.wav. 
 Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable umaxnorm, la 
 cual tiene un valor inferior a 0.5, la u1norm de 0.8 por encima y la potencia upot por debajo de los -40 dB. 
 
@@ -144,7 +144,7 @@ Ejercicios de ampliación
 </p>
 
 Para facilitar el uso del programa y la detección de pitch, hemos añadidio varias variables: umaxnorm (umbral del máximo de la autocorrelación normalizada), 
-u1norm (umnbral de la autocorrelación normalizada en 1) y upot (umbral del nivel de potencia). Estas nos permiten una mayor facilidad en la 
+u1norm (umbral de la autocorrelación normalizada en 1) y upot (umbral del nivel de potencia). Estas nos permiten una mayor facilidad en la 
 aproximación de los parametros óptimos. 
 
 Captura del mensaje de especificación de los argumentos.     
