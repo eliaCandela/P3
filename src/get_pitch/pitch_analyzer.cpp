@@ -12,8 +12,12 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+<<<<<<< HEAD
       /// \DONE Autocorrelation calculated 
 
+=======
+      /// \DONE Autocorrelation calculated
+>>>>>>> 9303db4887ae8073988650b7f6883fc78ca906df
       r[l]= 0.0f;
       for(unsigned int n = l; n<x.size();n++){
         r[l] += x[n]*x[n-l];
@@ -43,6 +47,7 @@ namespace upc {
         window[n] = a0-a1*cos((2*M_PI*n)/(frameLen-1));
       }
     }
+
     break;
 
     case RECT:
@@ -51,12 +56,12 @@ namespace upc {
     }
   }
 
-  void PitchAnalyzer::set_f0_range(float min_F0, float max_F0) {
-    npitch_min = (unsigned int) samplingFreq/max_F0;
-    if (npitch_min < 2)
-      npitch_min = 2;  //samplingFreq/2
+   void PitchAnalyzer::set_f0_range(float min_F0, float max_F0) {
+     npitch_min = (unsigned int) samplingFreq/max_F0;
+     if (npitch_min < 2)
+       npitch_min = 2;  // samplingFreq/2
 
-    npitch_max = 1 + (unsigned int) samplingFreq/min_F0;
+     npitch_max = 1 + (unsigned int) samplingFreq/min_F0;
 
     //frameLen should include at least 2*T0
     if (npitch_max > frameLen/2)
@@ -110,7 +115,7 @@ namespace upc {
     float pot = 10 * log10(r[0]);
 
     
-
+    
     //You can print these (and other) features, look at them using wavesurfer
     //Based on that, implement a rule for unvoiced
     //change to #if 1 and compile
