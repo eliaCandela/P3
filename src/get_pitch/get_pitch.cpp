@@ -25,7 +25,10 @@ Usage:
     get_pitch --version
 
 Options:
-    -m FLOAT, --umaxnorm FLOAT  Umbral del maximo de la autocorrelacion normalizada [default: 0.5]
+    -m FLOAT, --umaxnorm FLOAT  Umbral del maximo de la autocorrelacion normalizada [default: 0.48]
+    -p FLOAT, --upot FLOAT Umbral del nivel de potencia [default: 42.0]
+    -r FLOAT, --u1norm FLOAT Umbral autocorrelacion normalizada en 1 [default : 0.98]
+
     -h, --help  Show this screen
     --version   Show the version of the project
 
@@ -40,15 +43,17 @@ int main(int argc, const char *argv[]) {
 	/// \TODO 
 	///  Modify the program syntax and the call to **docopt()** in order to
 	///  add options and arguments to the program.
+  /// \DONE Added umaxnorm, u1norm, upot
     std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
         {argv + 1, argv + argc},	// array of arguments, without the program name
         true,    // show help if requested
         "2.0");  // version string
 
-  //docopt = mapeo
 	std::string input_wav = args["<input-wav>"].asString();
 	std::string output_txt = args["<output-txt>"].asString();
   float umaxnorm = std::stof(args["--umaxnorm"].asString());
+  float u1norm = std::stof(args["--u1norm"].asString());
+  float upot = std::stof(args["--upot"].asString());
 
   // Read input sound file
   unsigned int rate;
@@ -62,26 +67,27 @@ int main(int argc, const char *argv[]) {
   int n_shift = rate * FRAME_SHIFT; //desplazamiento
 
   // Define analyzer
-  PitchAnalyzer analyzer(n_len, rate, PitchAnalyzer::RECT, 50, 500, umaxnorm);
-  /// \FET -> add the argument umaxronm
+  PitchAnalyzer analyzer(n_len, rate, PitchAnalyzer::RECT, 50, 500, umaxnorm, u1norm, upot); 
+
 
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For instance,
   /// central-clipping or low pass filtering may be used.
-  
+  /// \DONE Center-cliping without offset 
+
   // Iterate for each frame and save values in f0 vector
   vector<float>::iterator iX;
   vector<float> f0;
 
-  //center-clipping: DATA 
-  float alpha = 0.008;
+  //center-clipping
+  float alpha = 0.0042;
   for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (-alpha<*iX < alpha){ //0.008
+    if (*iX < alpha && *iX > -alpha){ 
       *iX = 0;
     }
 
   }
-  /// \FET -> center-cliping done
+
 
   for (iX = x.begin(); iX + n_len < x.end(); iX = iX + n_shift) {
     float f = analyzer(iX, iX + n_len);
@@ -91,11 +97,11 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
-  /// \FET -> Non recursive median filter 
+  /// \DONE Non recursive median filter 
 
   float aux = 0;
-  int k_wind = 3; ///window size
-  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
+  int k_wind = 1; ///window size
+  for(int i = 0; i < (int)f0.size(); i++){
     for(int j = 0; j < k_wind; ++j){
       if(i <= ((int)f0.size()-k_wind)){
         aux += f0[i + j]; 

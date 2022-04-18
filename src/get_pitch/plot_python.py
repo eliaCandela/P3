@@ -3,34 +3,34 @@
 #   * numpy
 #   * matplotlib
 from scipy.io import wavfile
-from scipy.signal import find_peaks
+#from scipy.signal import find_peaks
 from matplotlib import pyplot as plt
 import numpy as np
 from pydub import AudioSegment
 #import librosa
 import statsmodels.api as sm
-import soundfile as sf
+#import soundfile as sf
 
 #cut the signal
-#t1 = 0 * 1000 #Works in milliseconds
-#t2 = 370 * 1000
-#newAudio = AudioSegment.from_wav("rl002.wav")
-#newAudio = newAudio[t1:t2]
-#newAudio.export('rl002_fragment.wav', format="wav") #Exports to a wav file in the current path.
+t1 = 0 * 1000 #Works in milliseconds
+t2 = 370 * 1000
+newAudio = AudioSegment.from_wav("rl002.wav")
+newAudio = newAudio[t1:t2]
+newAudio.export('rl002_fragment.wav', format="wav") #Exports to a wav file in the current path.
 
-senyal_original, f = sf.read('rl002.wav ')
+#senyal_original, f = sf.read('rl002.wav ')
 
 # Load data and sampling frequency from the data file
-D = int(0.03 * f)
-r = np.zeros(D)
-T0 = int(0.621 * f)
-#samplerate, data = wavfile.read('rl002_fragment.wav')
-senyal = senyal_original[T0:T0+D]
+#D = int(0.03 * f)
+#r = np.zeros(D)
+#T0 = int(0.621 * f)
+samplerate, data = wavfile.read('rl002_fragment.wav')
+#senyal = senyal_original[T0:T0+D]
 
 # Get some useful statistics
-#T = 1/samplerate # Sampling period
-#N = len(data) # Signal length in samples
-#t = N / samplerate # Signal length in seconds
+T = 1/samplerate # Sampling period
+N = len(data) # Signal length in samples
+t = N / samplerate # Signal length in seconds
 
 
 #Y_k = np.fft.fft(data)[0:int(N/2)]/N # FFT
@@ -38,16 +38,16 @@ senyal = senyal_original[T0:T0+D]
 #Pxx = np.abs(Y_k) # Power spectrum
 
 #f = samplerate * np.arange((N/2)) / N; # frequencies
-#auto = sm.tsa.acf(data, nlags=600)
+auto = sm.tsa.acf(data, nlags=600)
 
-for k in range(D):
-    for n in range(len(senyal_original)-k):
-        r[k] = r[k] + (senyal_original[n] * senyal_original[k+n])   
-    r[k] = r[k] /len(newAudio)
+#for k in range(D):
+ #   for n in range(len(senyal)-k):
+  #      r[k] = r[k] + (senyal[n]* senyal[k+n])   
+   # r[k] = r[k] /len(senyal)
 
 # plotting
 fig,ax = plt.subplots()
-plt.plot(r)
+plt.plot(auto)
 #plt.plot(f[0:5000], Pxx[0:5000], linewidth=2)
 plt.ylabel('Amplitude')
 plt.xlabel('Frequency [Hz]')
