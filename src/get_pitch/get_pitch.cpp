@@ -73,8 +73,9 @@ int main(int argc, const char *argv[]) {
   vector<float> f0;
 
   //center-clipping: DATA 
+  float alpha = 0.008;
   for (iX = x.begin(); iX  < x.end(); iX++ ) {
-    if (*iX < 0.008){ //0.008
+    if (-alpha<*iX < alpha){ //0.008
       *iX = 0;
     }
 
