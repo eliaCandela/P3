@@ -1,4 +1,5 @@
 /// @file
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -105,7 +106,7 @@ int main(int argc, const char *argv[]) {
     f0[i] = aux/k_wind;
     aux=0;
   }
-
+  
   // Write f0 contour into the output file
   ofstream os(output_txt);
   if (!os.good()) {

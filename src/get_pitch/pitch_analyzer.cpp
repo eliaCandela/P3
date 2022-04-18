@@ -74,7 +74,7 @@ namespace upc {
       unvoiced = false;
     }
     return unvoiced;*/
-    if ((pot < -42.0F || r1norm < 0.34F) && rmaxnorm < 0.35F)
+    if ((pot < -44.0F || r1norm < 0.895F) && rmaxnorm < 0.48F)
       return true;
     else
       return false;

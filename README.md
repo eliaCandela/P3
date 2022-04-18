@@ -14,13 +14,9 @@ Ejercicios básicos
   `get_pitch`.
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
-   ```
-
-  void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
-
-    for (unsigned int l = 0; l < r.size(); ++l) {
-      /// \TODO Compute the autocorrelation r[l]
-      /// \FET -> autocorrelation calculated
+   
+```
+for (unsigned int l = 0; l < r.size(); ++l) {
 
       r[l]= 0.0f;
       for(unsigned int n = l; n<x.size();n++){
@@ -29,13 +25,10 @@ Ejercicios básicos
       r[l] = r[l] / x.size();
       
     if (r[0] == 0.0F) //to avoid log() and divide zero 
-      r[0] = 1e-10; 
-      
+      r[0] = 1e-10;  
     }
-
-  }
-		
-  ```
+  };
+```
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
@@ -44,10 +37,28 @@ Ejercicios básicos
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
+
+
+
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
+```
+vector<float>::const_iterator iR = r.begin(), iRMax = iR;
+    for (iR = iRMax = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++) {
+      if (*iR > *iRMax) {
+        iRMax = iR;
+      }
+    }
+```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+```
+if ((pot < -44.0F || r1norm < 0.895F) && rmaxnorm < 0.48F)
+      return true;
+    else
+      return false;
+```
+Podemos detectar si se trata de sonoro o sordo segun los valores obtenidos en las gráficas adjuntas. 
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del estimador de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -55,26 +66,59 @@ Ejercicios básicos
   * Utilice el programa `wavesurfer` para analizar las condiciones apropiadas para determinar si un
     segmento es sonoro o sordo. 
 	
-	  - Inserte una gráfica con la estimación de pitch incorporada a `wavesurfer` y, junto a ella, los 
-	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
+	- Inserte una gráfica con la estimación de pitch incorporada a `wavesurfer` y, junto a ella, los 
+	  principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
 		(r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
 		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
 
-		Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
+	Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
 
-	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
-		en esta práctica es de 15 ms.
+	Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
+	en esta práctica es de 15 ms.
+		
+	-> Para poder obtener de forma más precisa los valores de potencia, autocorrelación y atocorrelación normalizada, 
+	representamos con el wavesurfer los tres ficheros de datos de nuestra señal de referencia (rl002.f0).
+	  
+	En un tramo sonoro con una ventana de 15 ms, hemos encontrado lo siguiente: 
+<p align="center">
+  <img src="Captura_tramo_sonoro.jpg" width="700" title="Captura del tramo sonoro">
+</p>
+	En un tramo sordo con una ventana de 15 ms, hemos encontrado lo siguiente: 
+<p align="center">
+  <img src="Captura_tramo_sordo.jpg" width="700" title="Captura del tramo sordo">
+</p>
+	La primera gráfica que se observa es la de la autocorrelación normalizada (autocorrelayion_norm.txt), 
+	con variable rmaxnorm, la siguiente es la de la autocorrelacion (autocorrelation.txt), con variable r1norm, 
+	a continuación la potencia (power.pot), con variable pot, y al final el pitch estimation y la propia señal rl002.wav. 
+	Tal y como vemos en las gráficas, los tramos sonoros son delimitados por la variable rmaxnorm, la 
+	cual tiene un valor entre los 0.4 y 0.5, la r1norm de 0.8 por encima y la potencia  por encima de los -40 dB. 
+	
+- Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
+su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
+ilustrativa del resultado de ambos estimadores.
+Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
+el uso de alternativas de mayor calidad (particularmente Python).
 
-      - Use el estimador de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
-	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-		ilustrativa del resultado de ambos estimadores.
-     
-		Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
-	 	el uso de alternativas de mayor calidad (particularmente Python).
-  
+-> Usando el programa `Wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
+por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
+<p align="center">
+  <img src="Captura_pitch_estimation.jpg" width="800" title="Captura de la señal">
+</p>
+  	Este resultado lo podemos obtener numericamente con el código de pitch_evaluate, ejecutando y 
+	consiguiendo lo siguiente: 
+	
+	**...imagen...**
+	
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
+
+-> Usando el comando: ```pitch_db/train/*.f0ref ```:
+|Values|tasa error|score|
+|-|:-:|-:|
+|col 1 is|left-aligned|$1600|
+|col 2 is|centered|$12|
+|col 3 is|right-aligned|$1|
 
 Ejercicios de ampliación
 ------------------------
@@ -85,9 +129,22 @@ Ejercicios de ampliación
   Esta técnica le resultará especialmente útil para optimizar los parámetros del estimador. Recuerde que
   una parte importante de la evaluación recaerá en el resultado obtenido en la estimación de pitch en la
   base de datos.
-
+  
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
+    
+<p align="center">
+  <img src="Captura_variable_docopt.jpg" width="500" title="Captura de la señal">
+</p>
+
+Para facilitar el uso del programa y detección de pitch, hemos añadidio una variable llamada "umaxnorm" que 
+corresponde al umbral del maximo de la autocorrelación normalizada. Esta la usamos en la función analyzer() y la inicializamos en el
+constructor de PitchAnalyzer. 
+    
+<p align="center">
+  <img src="Captura_variable_funcion.jpg" width="700" title="Captura de la señal">
+</p>
+
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de estimación
   de pitch.
@@ -112,6 +169,44 @@ Ejercicios de ampliación
   También se valorará la realización de un estudio de los parámetros involucrados. Por ejemplo, si se opta
   por implementar el filtro de mediana, se valorará el análisis de los resultados obtenidos en función de
   la longitud del filtro.
+  
+   -> Para el preprocesado hemos utilizado la técnica de CENTER-CLIPPING con el código siguiente: 
+```
+ for (iX = x.begin(); iX  < x.end(); iX++ ) {
+    if (*iX < 0.008){
+      *iX = 0;
+    }
+  }
+```
+  Esta técnica consiste en anular los valores de magnitud pequeña de la señal, permitiendo que al introducir 
+  una distorsión no lineal, la intensidad de los harmónicos de orden elevado aumenten. Generando una robustez 
+  de los harmómicos frente al ruido. 
+  
+  -> En el postprocesado hemos usado la técnica del FILTRO DE MEDIANA con el código siguiente: 
+  ```
+  float aux = 0;
+  int k_wind = 3; ///window size
+  for(int i = 0; i < (int)f0.size(); i=i+k_wind){
+    for(int j = 0; j < k_wind; ++j){
+      if(i <= ((int)f0.size()-k_wind)){
+        aux += f0[i + j]; 
+      }else{
+        aux = f0[i];
+      }
+    }
+    f0[i] = aux/k_wind;
+    aux=0;
+  }
+  ```
+  
+  Esta técnica consiste en un filtro no lineal para evitar mala detección del pitch con sus múltiplos o de submultiplos de la freuencia real. 
+  Se basa en caluclar el valor mediano en una ventana centrada en cada instante de tiempo. con la función de reducir el ruido. Su uso es más 
+  concreto en señales con errores muy groseros, ya que podria incrementar el error fino de la estimación. 
+  
+  Para ello, hemos usado una ventana de tamaño 3. Hemos escogido este valor dado que al probar con otros impares, el 
+  porcentage de detección iba disminuiendo, siendo cada vez menos preciso. Eso es así, por qué con mayor dimesión del filtro, más ruido 
+  se va reduciendo, eliminando partes de la propia señal con menor certeza. Aun así, hemos podido comprobar que con nuestro filtro y un tamaño de 13, 
+  vuelve a subir la detección, hasta conseguir la inicial con 3. 
    
 
 Evaluación *ciega* del estimador
