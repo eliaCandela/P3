@@ -37,6 +37,7 @@ for (unsigned int l = 0; l < r.size(); ++l) {
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la biblioteca matplotlib de Python.
 
+![image](https://user-images.githubusercontent.com/69263837/163874508-b5155f63-dc40-4367-bee8-c150f56a8364.png)
 
 
 
@@ -102,12 +103,19 @@ ilustrativa del resultado de ambos estimadores.
 Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará
 el uso de alternativas de mayor calidad (particularmente Python).
 
+
+
 -> Usando el programa `wavesurfer` sacamos la comparación de los pitch generados por nuestro código y el generado 
 por la propia señal. La señal de prueba que hemos usado es la rl002.wav. 
 
 <p align="center">
   <img src="Captura_pitch_estimation.jpg" width="800" title="Captura de la señal">
 </p>
+
+Si lo vemos en detalle con python:
+
+![image](https://user-images.githubusercontent.com/69263837/163874748-c27f6333-dd6d-4c73-af60-733474d58a61.png)
+
 	
   * Optimice los parámetros de su sistema de estimación de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
@@ -168,9 +176,9 @@ Captura del mensaje de especificación de los argumentos.
     }
   }
 ```
-  Esta técnica consiste en anular los valores de magnitud pequeña de la señal, permitiendo que al introducir 
+  Esta técnica consiste en recortar una señal en amplitud, permitiendo que al introducir 
   una distorsión no lineal, la intensidad de los harmónicos de orden elevado aumenten. Generando una robustez 
-  de los harmómicos frente al ruido. 
+  de los harmónicos frente al ruido. 
 
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
 
@@ -190,18 +198,18 @@ Captura del mensaje de especificación de los argumentos.
     aux=0;
   }
   ```
-  Esta técnica consiste en un filtro no lineal para evitar la mala detección del pitch cogiendo sus múltiplos o  submultiplos de la freuencia real. 
-  Se basa en caluclar el valor mediano en una ventana centrada en cada instante de tiempo, con la función de reducir el ruido. Su uso es más 
+  Esta técnica consiste en un filtro no lineal para evitar la mala detección del pitch cogiendo sus múltiplos o  submultiplos de la frecuencia real. 
+  Se basa en calcular el valor medio en una ventana centrada en cada instante de tiempo, con objetvo de reducir el ruido. Su uso es más 
   concreto en señales con errores muy groseros, ya que podria incrementar el error fino de la estimación. 
   
-  Para ello, nos hemos dado cuenta que al implementar este filtro, el porcentaje de detección disminuye, aumentando los errores gruesos (tal y como se ve
+  Al implementar el filtro nos hemos dado cuenta de que el porcentaje de detección disminuye notoriamente, aumentando los errores gruesos (tal y como se ve
   en la captura adjunta).
   
 <p align="center">
   <img src="captura_con_ventana_filtro.jpeg" width="600" title="Captura de la señal">
 </p>
   
-  Por este motivo, mantenemos el filtro de mediana con un tamaño de ventana de 1. 
+  Por este motivo, mantenemos el filtro de mediana con un tamaño de ventana de 1 (es decir no se usa). 
 
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
