@@ -117,13 +117,13 @@ por la propia señal. La señal de prueba que hemos usado es la rl002.wav.
 Este resultado lo podemos obtener numericamente con el código de `pitch_evaluate` de la base de datos, ejecutando y consiguiendo lo siguiente: 
 
 <p align="center">
-  <img src="captura_resultado_summary.jpg" width="800" title="Captura de la señal">
+  <img src="captura_resultado_summary.jpeg" width="800" title="Captura de la señal">
 </p>
 	
 Para el fichero de prueba (rl002.wav), obtenemos una mayor detección. 
 	
 <p align="center">
-  <img src="captura_señal_propia.jpg" width="800" title="Captura de la señal">
+  <img src="captura_señal_propia.jpeg" width="800" title="Captura de la señal">
 </p>
 
 Ejercicios de ampliación
@@ -140,7 +140,7 @@ Ejercicios de ampliación
     con los argumentos añadidos.
     
 <p align="center">
-  <img src="captura_mensaje_ayuda.jpg" width="500" title="Captura de la señal">
+  <img src="captura_mensaje_ayuda.jpeg" width="500" title="Captura de la señal">
 </p>
 
 Para facilitar el uso del programa y la detección de pitch, hemos añadidio varias variables: umaxnorm (umbral del máximo de la autocorrelación normalizada), 
@@ -149,7 +149,7 @@ aproximación de los parametros óptimos.
 
 Captura del mensaje de especificación de los argumentos.     
 <p align="center">
-  <img src="captura_mensaje_argumentos.jpg" width="700" title="Captura de la señal">
+  <img src="captura_mensaje_argumentos.jpeg" width="700" title="Captura de la señal">
 </p>
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de estimación
@@ -198,7 +198,7 @@ Captura del mensaje de especificación de los argumentos.
   en la captura adjunta).
   
 <p align="center">
-  <img src="captura_con_ventana_filtro.jpg" width="700" title="Captura de la señal">
+  <img src="captura_con_ventana_filtro.jpeg" width="700" title="Captura de la señal">
 </p>
   
   Por este motivo, mantenemos el filtro de mediana con un tamaño de ventana de 1. 
