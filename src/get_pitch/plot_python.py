@@ -2,14 +2,14 @@
 #   * scipy
 #   * numpy
 #   * matplotlib
-from scipy.io import wavfile
-from scipy.signal import find_peaks
+#from scipy.io import wavfile
+#from scipy.signal import find_peaks
 from matplotlib import pyplot as plt
-import numpy as np
-from pydub import AudioSegment
+#import numpy as np
+#from pydub import AudioSegment
 #import librosa
-import statsmodels.api as sm
-import soundfile as sf
+#import statsmodels.api as sm
+import sndfile as sf
 
 #cut the signal
 #t1 = 0 * 1000 #Works in milliseconds
